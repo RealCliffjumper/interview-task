@@ -4,7 +4,7 @@ import { User } from '../../models/user';
 import { FormsModule } from '@angular/forms';
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { ColumnItem } from '../../models/column-item';
-import { isBefore} from 'date-fns'
+import { toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-table',
@@ -17,12 +17,13 @@ import { isBefore} from 'date-fns'
 })
 export class Table {
   userService = inject(UserService)
-  users = signal<User[]>([])
+  users = toSignal(this.userService.getUsers(), { initialValue: []});
+
   listOfColumns: ColumnItem[] = [
     {
       name: 'First name',
       sortOrder: null,
-      sortFn: (a: User, b: User) => a.firstName.localeCompare(b.firstName),
+      sortFn: (a: User, b: User) => (a.firstName ?? '').localeCompare(b.firstName ?? ''),
       sortDirections: ['ascend', 'descend', null],
       filterMultiple: false,
       listOfFilter: [],
@@ -31,7 +32,7 @@ export class Table {
     {
       name: 'Last name',
       sortOrder: null,
-      sortFn: (a: User, b: User) => a.lastName.localeCompare(b.lastName),
+      sortFn: (a: User, b: User) => (a.lastName ?? '').localeCompare(b.lastName ?? ''),
       sortDirections: ['ascend', 'descend', null],
       filterMultiple: false,
       listOfFilter: [],
@@ -40,7 +41,7 @@ export class Table {
     {
       name: 'Date of birth',
       sortOrder: null,
-      sortFn: (a: User, b: User) => this.datesCompare(a.birthDate, b.birthDate),
+      sortFn: (a, b) => (a.birthDate ?? '').localeCompare(b.birthDate ?? ''),
       sortDirections: ['ascend', 'descend', null],
       filterMultiple: false,
       listOfFilter: [],
@@ -49,7 +50,7 @@ export class Table {
     {
       name: 'Title',
       sortOrder: null,
-      sortFn: (a: User, b: User) => a.title.localeCompare(b.title),
+      sortFn: (a: User, b: User) => (a.title ?? '').localeCompare(b.title ?? ''),
       sortDirections: ['ascend', 'descend', null],
       filterMultiple: true,
       listOfFilter: [
@@ -57,7 +58,7 @@ export class Table {
         { text: 'Mrs', value: 'Mrs'},
         { text: 'Ms', value: 'Ms'}
       ],
-      filterFn: (list: string[], item: User) => list.some(name => item.title === name)
+      filterFn: (list: string[], user: User) => list.some(title => user.title && user.title === title)
     },
     {
       name: 'Phone number',
@@ -72,38 +73,25 @@ export class Table {
 
   searchTerm = signal('')
   filteredUsers = computed(()=>{
-    const normalize = (v: string) =>
-    v.toLowerCase().replace(/\s+/g, ' ').trim();
 
-    const term = normalize(this.searchTerm());
+    const term = this.normalize(this.searchTerm());
 
     return this.users().filter(user => {
       if (!term) return true;
 
-      const first = normalize(user.firstName);
-      const last = normalize(user.lastName);
-
       return [
-        first,
-        last,
-        `${first} ${last}`,
-        `${last} ${first}`
-      ].some(v => v.includes(term));
+        user.firstName,
+        user.lastName,
+        `${user.firstName} ${user.lastName}`,
+        `${user.lastName} ${user.firstName}`,
+        user.phone
+      ].map(this.normalize)
+      .some(v => v.includes(term));
     });
   })
 
-  datesCompare(d1: Date, d2: Date){
-    let date1 = new Date(d1)
-    let date2 = new Date(d2)
-    switch(isBefore(date1, date2)){
-      case true: return 1;
-      case false: return -1;
-    }
+  private normalize(v: string = ''): string {
+    return v.toLowerCase().replace(/\s+/g, ' ').trim();
   }
-
-  ngOnInit(){
-    this.userService.getUsers().subscribe({
-      next:(data) => this.users.set(data)
-    })
-  }
+  
 }
