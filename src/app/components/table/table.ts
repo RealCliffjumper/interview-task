@@ -57,7 +57,7 @@ export class Table {
         { text: 'Mrs', value: 'Mrs'},
         { text: 'Ms', value: 'Ms'}
       ],
-      filterFn: (list: string[], item: User) => list.some(name => item.title.indexOf(name) !== -1)
+      filterFn: (list: string[], item: User) => list.some(name => item.title === name)
     },
     {
       name: 'Phone number',
@@ -72,20 +72,24 @@ export class Table {
 
   searchTerm = signal('')
   filteredUsers = computed(()=>{
-    const term = this.searchTerm().toLowerCase();
+    const normalize = (v: string) =>
+    v.toLowerCase().replace(/\s+/g, ' ').trim();
+
+    const term = normalize(this.searchTerm());
+
     return this.users().filter(user => {
-    if (!term) return true;
+      if (!term) return true;
 
-    const first = user.firstName.toLowerCase();
-    const last = user.lastName.toLowerCase();
-    const full = `${first} ${last}`;
+      const first = normalize(user.firstName);
+      const last = normalize(user.lastName);
 
-    return (
-      first.includes(term) ||
-      last.includes(term) ||
-      full.includes(term)
-    );
-  });
+      return [
+        first,
+        last,
+        `${first} ${last}`,
+        `${last} ${first}`
+      ].some(v => v.includes(term));
+    });
   })
 
   datesCompare(d1: Date, d2: Date){
