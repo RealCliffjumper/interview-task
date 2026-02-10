@@ -5,9 +5,9 @@
     "firstName": "Farley",
     "lastName": "Navarro",
     "birthDate": "2005-01-20",
-    "title": [
+    "title": 
       "Mrs"
-    ],
+    ,
     "phone": "+1 (819) 405-2305"
   },
   {
@@ -15,9 +15,9 @@
     "firstName": "Dale",
     "lastName": "Ramos",
     "birthDate": "2000-05-15",
-    "title": [
+    "title": 
       "Mr"
-    ],
+    ,
     "phone": "+1 (810) 591-3719"
   },
   {
@@ -25,9 +25,9 @@
     "firstName": "Barber",
     "lastName": "Greer",
     "birthDate": "1996-05-26",
-    "title": [
+    "title": 
       "Mr"
-    ],
+    ,
     "phone": "+1 (980) 494-3287"
   },
   {
@@ -35,9 +35,9 @@
     "firstName": "Diane",
     "lastName": "Macdonald",
     "birthDate": "2003-11-18",
-    "title": [
+    "title": 
       "Ms"
-    ],
+    ,
     "phone": "+1 (921) 507-3133"
   },
   {
@@ -45,9 +45,9 @@
     "firstName": "Sanchez",
     "lastName": "Finch",
     "birthDate": "1997-06-03",
-    "title": [
+    "title": 
       "Mr"
-    ],
+    ,
     "phone": "+1 (965) 473-2268"
   },
   {
@@ -55,9 +55,9 @@
     "firstName": "Dorothy",
     "lastName": "Matthews",
     "birthDate": "1993-05-07",
-    "title": [
+    "title": 
       "Mrs"
-    ],
+    ,
     "phone": "+1 (881) 467-3322"
   },
   {
@@ -65,9 +65,9 @@
     "firstName": "Dina",
     "lastName": "Baker",
     "birthDate": "1996-10-29",
-    "title": [
+    "title": 
       "Ms"
-    ],
+    ,
     "phone": "+1 (985) 507-2349"
   },
   {
@@ -75,9 +75,9 @@
     "firstName": "Lindsay",
     "lastName": "Marks",
     "birthDate": "2005-08-01",
-    "title": [
+    "title": 
       "Mrs"
-    ],
+    ,
     "phone": "+1 (971) 589-3536"
   },
   {
@@ -85,9 +85,9 @@
     "firstName": "Macdonald",
     "lastName": "Moreno",
     "birthDate": "1996-09-09",
-    "title": [
+    "title": 
       "Mr"
-    ],
+    ,
     "phone": "+1 (921) 433-3221"
   },
   {
@@ -95,9 +95,8 @@
     "firstName": "Janice",
     "lastName": "Gibbs",
     "birthDate": "1996-02-02",
-    "title": [
-      "Ms"
-    ],
+    "title":
+      "Ms",
     "phone": "+1 (815) 419-3628"
   }
 ]
