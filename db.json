@@ -1,0 +1,104 @@
+{
+"users":[
+  {
+    "_id": "698b01b77c5b2b75bfc0d2bf",
+    "firstName": "Farley",
+    "lastName": "Navarro",
+    "birthDate": "2005-01-20",
+    "title": [
+      "sit"
+    ],
+    "phone": "+1 (819) 405-2305"
+  },
+  {
+    "_id": "698b01b7c790aba322f703be",
+    "firstName": "Dale",
+    "lastName": "Ramos",
+    "birthDate": "2000-05-15",
+    "title": [
+      "tempor"
+    ],
+    "phone": "+1 (810) 591-3719"
+  },
+  {
+    "_id": "698b01b79570a1dc51c66661",
+    "firstName": "Barber",
+    "lastName": "Greer",
+    "birthDate": "1996-05-26",
+    "title": [
+      "duis"
+    ],
+    "phone": "+1 (980) 494-3287"
+  },
+  {
+    "_id": "698b01b778d05db51d7ed810",
+    "firstName": "Diane",
+    "lastName": "Macdonald",
+    "birthDate": "2003-11-18",
+    "title": [
+      "dolor"
+    ],
+    "phone": "+1 (921) 507-3133"
+  },
+  {
+    "_id": "698b01b763576efb70661d21",
+    "firstName": "Sanchez",
+    "lastName": "Finch",
+    "birthDate": "1997-06-03",
+    "title": [
+      "velit"
+    ],
+    "phone": "+1 (965) 473-2268"
+  },
+  {
+    "_id": "698b01b7199b29dab51ae5dc",
+    "firstName": "Dorothy",
+    "lastName": "Matthews",
+    "birthDate": "1993-05-07",
+    "title": [
+      "in"
+    ],
+    "phone": "+1 (881) 467-3322"
+  },
+  {
+    "_id": "698b01b7262331f6edd30575",
+    "firstName": "Dina",
+    "lastName": "Baker",
+    "birthDate": "1996-10-29",
+    "title": [
+      "nulla"
+    ],
+    "phone": "+1 (985) 507-2349"
+  },
+  {
+    "_id": "698b01b782cc676cbb76ad94",
+    "firstName": "Lindsay",
+    "lastName": "Marks",
+    "birthDate": "2005-08-01",
+    "title": [
+      "labore"
+    ],
+    "phone": "+1 (971) 589-3536"
+  },
+  {
+    "_id": "698b01b716b7d23f9a0a5974",
+    "firstName": "Macdonald",
+    "lastName": "Moreno",
+    "birthDate": "1996-09-09",
+    "title": [
+      "veniam"
+    ],
+    "phone": "+1 (921) 433-3221"
+  },
+  {
+    "_id": "698b01b7fb7498cfeed4fd76",
+    "firstName": "Janice",
+    "lastName": "Gibbs",
+    "birthDate": "1996-02-02",
+    "title": [
+      "irure"
+    ],
+    "phone": "+1 (815) 419-3628"
+  }
+]
+}
