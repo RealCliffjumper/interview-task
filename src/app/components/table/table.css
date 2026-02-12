@@ -1,0 +1,10 @@
+.keyword-search{
+    margin-left:10px
+}
+
+.keyword-input{
+    border-radius:5px;
+    box-shadow: 0 4px 14px rgb(185, 178, 241);;
+    margin-top: 10px;
+    margin-left: 10px;
+}
