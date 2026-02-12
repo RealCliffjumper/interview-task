@@ -7,6 +7,7 @@ import { ColumnItem } from '../../models/column-item';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { catchError, of } from 'rxjs';
 import { UserCount } from '../../models/user-count';
+import { DECADES_DIC } from '../../models/decades-dic';
 
 @Component({
   selector: 'app-table',
@@ -31,18 +32,8 @@ export class Table {
     { initialValue: []}
   );
 
-  decades = [
-    0,
-    1,
-    2,
-    3,
-    4,
-    5,
-    6,
-    7,
-    8,
-    9
-  ]
+  decades = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9] //decades for matching
+  dec_dic = DECADES_DIC
 
   userCount = signal<UserCount[]>([])
 
@@ -124,20 +115,22 @@ export class Table {
     });
   })
  
+  //this is where the counting resides
   constructor(){
     effect(()=>{
       this.userCount.set([])
       for(let i=0; i<this.decades.length; i++){
+
         const usersForEachDecade = this.filteredUsers().filter(user => {
-            const n1 = new Date(user.birthDate).getFullYear()%1000
-            const n2 = Math.floor(n1%100/10)
-           return n2 === this.decades[i]
+          const n1 = new Date(user.birthDate).getFullYear()%1000
+          const n2 = Math.floor(n1%100/10)
+
+          return n2 === this.decades[i]
           }
         )
         const newUserCount = {decade: this.decades[i], count: usersForEachDecade.length}
         this.userCount.update(values => {return [...values, newUserCount]})
       }
-    console.log(this.userCount())
   })
   }
 

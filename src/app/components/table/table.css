@@ -7,4 +7,9 @@
     box-shadow: 0 4px 14px rgb(185, 178, 241);;
     margin-top: 20px;
     margin-left: 10px;
+    margin-right: 20px;
+}
+
+.count-label{
+    margin-top:10px
 }

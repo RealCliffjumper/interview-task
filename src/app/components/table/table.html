@@ -3,10 +3,9 @@
 <input [(ngModel)]="searchTerm" placeholder="Search by first name, last name, full name or phone" style="width: 20%;" class="keyword-input">
 @for(count of userCount(); track count){
   @if(count.count !== 0){
-    <label>{{count.decade}}:{{count.count}},</label>
+    <label  class="count-label">Users born in the {{dec_dic[count.decade]}}: {{count.count}} | </label>
   }
 }
-
 </div>
 <p></p>
 
