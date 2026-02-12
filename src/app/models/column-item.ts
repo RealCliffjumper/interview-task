@@ -7,6 +7,7 @@ export interface ColumnItem {
   sortFn: NzTableSortFn<User> | null;
   listOfFilter: NzTableFilterList;
   filterFn: NzTableFilterFn<User> | null;
+  priority: number | false;
   filterMultiple: boolean;
   sortDirections: NzTableSortOrder[];
 }
