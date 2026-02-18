@@ -30,6 +30,7 @@
     "@angular/forms": "^21.1.0",
     "@angular/platform-browser": "^21.1.0",
     "@angular/router": "^21.1.0",
+    "ag-charts-angular": "^13.1.0",
     "file-saver": "^2.0.5",
     "ng-zorro-antd": "^21.1.0",
     "ngx-filesaver": "^21.0.0",

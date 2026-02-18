@@ -11,17 +11,17 @@
 }
 </label>
 <button nz-button  nz-dropdown [nzDropdownMenu]="frommenu">FROM</button>
-<button nz-button  nz-dropdown [nzDropdownMenu]="tomenu" [nzDisabled]="range().length<1">TO</button>
-<button (click)="export()">Export</button>
+<button nz-button  nz-dropdown [nzDropdownMenu]="tomenu" [nzDisabled]="range().length<1" class="to-btn">TO</button>
+<button nz-button (click)="export()" class="export-btn">Export</button>
 
 
 </div>
 
 @if(rangeSelected()){
   <div class="user-counts">
-  <span>Users in between {{range()[0].toUpperCase()}}-{{range()[1].toUpperCase()}}: {{count1()}}</span>
-  <span>Users in between {{range()[1].toUpperCase()}}-Z: {{count2()}}</span>
-  <span>Users out of range: {{count3()}}</span>
+    <script>
+      </script>
+  <ag-charts [options]="options()"></ag-charts>
   </div>
 }
 
@@ -61,14 +61,14 @@
 <nz-dropdown-menu #frommenu="nzDropdownMenu">
   <ul nz-menu>
     @for(letter of alphabet; track $index){
-      <li nz-menu-item (click)="firstLetter(letter)">{{letter.toUpperCase()}}</li>
+      <li nz-menu-item (click)="firstLetter(letter)" class="dropdown-item">{{letter.toUpperCase()}}</li>
     }
   </ul>
 </nz-dropdown-menu>
 <nz-dropdown-menu #tomenu="nzDropdownMenu">
   <ul nz-menu>
     @for(letter of toLetterArr; track $index){
-      <li nz-menu-item (click)="secondLetter(letter)">{{letter.toUpperCase()}}</li>
+      <li nz-menu-item (click)="secondLetter(letter)" class="dropdown-item">{{letter.toUpperCase()}}</li>
     }
   </ul>
 </nz-dropdown-menu>

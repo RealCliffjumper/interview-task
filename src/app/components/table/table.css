@@ -26,13 +26,14 @@
     margin-right: 5px;
 }
 
-.user-counts{
-    margin-left: 3%;
-    margin-top:10px;
-    border-color:rgb(223, 99, 99);
-    border-width: 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    max-width: 90%;
+.export-btn{
+    margin-left:10px
+}
+
+.to-btn{
+    margin-left:10px;
+}
+
+.dropdown-item{
+    background-color: white;
 }

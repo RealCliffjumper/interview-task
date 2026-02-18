@@ -11,6 +11,10 @@ import { DECADES_DIC } from '../../models/decades-dic';
 import saveAs from 'file-saver';
 import { NzDropdownDirective, NzDropdownMenuComponent } from "ng-zorro-antd/dropdown";
 import { NzButtonModule } from 'ng-zorro-antd/button';
+import { AgCharts } from "ag-charts-angular";
+import { AgChartOptions, LegendModule, ModuleRegistry, PieSeriesModule, } from "ag-charts-community";
+
+ModuleRegistry.registerModules([LegendModule, PieSeriesModule]);
 
 @Component({
   selector: 'app-table',
@@ -19,7 +23,8 @@ import { NzButtonModule } from 'ng-zorro-antd/button';
     NzTableModule,
     NzDropdownDirective,
     NzDropdownMenuComponent,
-    NzButtonModule
+    NzButtonModule,
+    AgCharts
 ],
   templateUrl: './table.html',
   styleUrl: './table.css',
@@ -50,7 +55,6 @@ export class Table {
   toLetterArr = ''
   range = signal<string[]>([])
   rangeSelected = signal<boolean>(false)
-
   listOfColumns: ColumnItem[] = [
     {
       name: 'First name',
@@ -128,8 +132,45 @@ export class Table {
     });
   })
  
+  options = computed<AgChartOptions>(() => {
+  const range = this.range();
+
+  if (!range) return {
+      data: [],
+      series: [],
+    };;
+
+  return {
+    data: [
+      {
+        range: `Users between ${range[0].toUpperCase()}-${range[1].toUpperCase()}`,
+        count: this.count1(),
+      },
+      {
+        range: `Users between ${range[1].toUpperCase()}-Z`,
+        count: this.count2(),
+      },
+      {
+        range: "Users out of range",
+        count: this.count3(),
+      },
+    ],
+    title: {
+      text: "Last names in relation to letter range",
+    },
+    series: [
+      {
+        type: "pie",
+        angleKey: "count",
+        legendItemKey: "range", 
+      },
+    ],
+  };
+});
+
   //this is where the counting resides
   constructor(){
+    
     effect(()=>{
       this.userCount.set([])
       this.count1.set(0)
@@ -161,14 +202,16 @@ export class Table {
     }
   })
   }
-
+  
   firstLetter(l: string){
     this.range.set([])
     this.count1.set(0)
     this.count2.set(0)
+    
     this.rangeSelected.set(false)
     const f = [l]
     this.range.set(f)
+    
     this.toLetterArr = this.alphabet.split(l)[1]
   }
 
@@ -199,7 +242,6 @@ export class Table {
     const query = `^[${r[0]}-${r[1]}]`
     const query2 = `^[${r[1]}-z]`
     const regex = new RegExp(query, 'i')
-    const regex2 = new RegExp(query2, 'i')
     return v.toLowerCase().match(regex)
   }
   
