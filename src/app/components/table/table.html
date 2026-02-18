@@ -1,11 +1,15 @@
 <div class="keyword-search">
 <label>Keyword search:</label>
 <input [(ngModel)]="searchTerm" placeholder="Search by first name, last name, full name or phone" style="width: 20%;" class="keyword-input">
-@for(count of userCount(); track count){
+
+<label class="count-label">
+@for(count of userCount(); track count; let last=$last){
   @if(count.count !== 0){
-    <label  class="count-label">Users born in the {{dec_dic[count.decade]}}: {{count.count}} | </label>
+    Users born in the {{dec_dic[count.decade]}}: <span class="counter">{{count.count}}</span> @if(!last){| }
   }
 }
+</label>
+
 </div>
 <p></p>
 
@@ -32,7 +36,7 @@
           <tr>
             <td>{{ data.firstName }}</td>
             <td>{{ data.lastName }}</td>
-            <td>{{ data.birthDate }}</td>
+            <td data-cy="birth-date">{{ data.birthDate }}</td>
             <td>{{ data.title }}</td>
             <td>{{ data.phone }}</td>
           </tr>
