@@ -9,7 +9,10 @@
   }
 }
 </label>
-
+<label>Users in between A-M: {{count1()}}</label>
+<label>Users in between M-Z: {{count2()}}</label>
+<button (click)="normalize2('Roa')">check</button>
+<button (click)="export()">Export</button>
 </div>
 <p></p>
 
@@ -18,7 +21,7 @@
         <tr>
           @for (column of listOfColumns; track column) {
             <th
-              [nzSortOrder]="column.sortOrder"
+              [(nzSortOrder)]="column.sortOrder"
               [nzSortFn]="column.sortFn"
               [nzSortDirections]="column.sortDirections"
               [nzFilterMultiple]="column.filterMultiple"

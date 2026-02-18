@@ -8,6 +8,7 @@ import { toSignal } from '@angular/core/rxjs-interop';
 import { catchError, of } from 'rxjs';
 import { UserCount } from '../../models/user-count';
 import { DECADES_DIC } from '../../models/decades-dic';
+import saveAs from 'file-saver';
 
 @Component({
   selector: 'app-table',
@@ -20,7 +21,8 @@ import { DECADES_DIC } from '../../models/decades-dic';
 })
 
 //take filtered users take dob find out decade born in display count per decade
-
+//export filtered to json file via button
+//metric how many users fall last name starting between A->M the rest M->Z
 export class Table {
 
   userService = inject(UserService)
@@ -36,6 +38,8 @@ export class Table {
   dec_dic = DECADES_DIC
 
   userCount = signal<UserCount[]>([])
+  count1 = signal<number>(0)
+  count2 = signal<number>(0)
 
   listOfColumns: ColumnItem[] = [
     {
@@ -101,8 +105,7 @@ export class Table {
     
     return this.users().filter(user => {
       
-      if (!term) return true;
-      const matchesNameorPhone = [
+      const matchesNameorPhone = !term || [
         user.firstName,
         user.lastName,
         `${user.firstName} ${user.lastName}`,
@@ -119,23 +122,49 @@ export class Table {
   constructor(){
     effect(()=>{
       this.userCount.set([])
+      this.count1.set(0)
       for(let i=0; i<this.decades.length; i++){
 
         const usersForEachDecade = this.filteredUsers().filter(user => {
-          const n1 = new Date(user.birthDate).getFullYear()%1000
-          const n2 = Math.floor(n1%100/10)
-
-          return n2 === this.decades[i]
-          }
-        )
+            return this.getDecade(user.birthDate) === this.decades[i]
+          })
+       
         const newUserCount = {decade: this.decades[i], count: usersForEachDecade.length}
-        this.userCount.update(values => {return [...values, newUserCount]})
+        this.userCount.update(values => [...values, newUserCount])
+      }
+      const length = this.filteredUsers().length
+      for(let i=0; i<length; i++){
+        console.log(this.normalize2(this.filteredUsers()[i].lastName))
+        if(this.normalize2(this.filteredUsers()[i].lastName)){
+          this.count1.update(value=> value + 1)
+        }
+        else{
+          this.count2.update(value=> value + 1)
+        }
       }
   })
   }
 
+  getDecade(dob: string){
+    const n1 = new Date(dob).getFullYear()%1000
+    const n2 = Math.floor(n1%100/10)
+    return n2;
+  }
+
+  export(){
+    const users = this.filteredUsers()
+    let file = new Blob([JSON.stringify(users)], {type: 'json'})
+    saveAs(file, 'test.json')
+  }
+
   private normalize(v: string = ''): string {
     return v.toLowerCase().replace(/\s+/g, ' ').trim();
+  }
+
+  normalize2(v: string = ''){
+    console.log(v.toLowerCase().match(/[a-m]/g)?.at(0)?.length)
+
+    return v.toLowerCase().match(/^[A-Ma-m]/)
   }
   
 }
