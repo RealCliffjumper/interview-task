@@ -9,12 +9,17 @@ import { catchError, of } from 'rxjs';
 import { UserCount } from '../../models/user-count';
 import { DECADES_DIC } from '../../models/decades-dic';
 import saveAs from 'file-saver';
+import { NzDropdownDirective, NzDropdownMenuComponent } from "ng-zorro-antd/dropdown";
+import { NzButtonModule } from 'ng-zorro-antd/button';
 
 @Component({
   selector: 'app-table',
   imports: [
     FormsModule,
-    NzTableModule
+    NzTableModule,
+    NzDropdownDirective,
+    NzDropdownMenuComponent,
+    NzButtonModule
 ],
   templateUrl: './table.html',
   styleUrl: './table.css',
@@ -40,6 +45,11 @@ export class Table {
   userCount = signal<UserCount[]>([])
   count1 = signal<number>(0)
   count2 = signal<number>(0)
+  count3 = signal<number>(0)
+  alphabet = 'abcdefghijklmnopqrstuvwxyz';
+  toLetterArr = ''
+  range = signal<string[]>([])
+  rangeSelected = signal<boolean>(false)
 
   listOfColumns: ColumnItem[] = [
     {
@@ -133,17 +143,40 @@ export class Table {
         this.userCount.update(values => [...values, newUserCount])
       }
       const length = this.filteredUsers().length
-      for(let i=0; i<length; i++){
-        console.log(this.normalize2(this.filteredUsers()[i].lastName))
-        if(this.normalize2(this.filteredUsers()[i].lastName)){
+      
+      if(this.rangeSelected()){
+        for(let i=0; i<length; i++){
+        if(this.fromXtoY(this.filteredUsers()[i].lastName)){
+          console.log('pass ' + this.filteredUsers()[i].lastName)
           this.count1.update(value=> value + 1)
         }
-        else{
+        else if(this.fromYtoZ(this.filteredUsers()[i].lastName)){
+          console.log('fail  ' + this.filteredUsers()[i].lastName)
           this.count2.update(value=> value + 1)
         }
+        else{
+          this.count3.update(value => value+1)
+        }
       }
+    }
   })
   }
+
+  firstLetter(l: string){
+    this.range.set([])
+    this.count1.set(0)
+    this.count2.set(0)
+    this.rangeSelected.set(false)
+    const f = [l]
+    this.range.set(f)
+    this.toLetterArr = this.alphabet.split(l)[1]
+  }
+
+  secondLetter(l: string){
+    this.rangeSelected.set(true)
+    this.range.update(value => [...value, l])
+  }
+
 
   getDecade(dob: string){
     const n1 = new Date(dob).getFullYear()%1000
@@ -161,11 +194,20 @@ export class Table {
     return v.toLowerCase().replace(/\s+/g, ' ').trim();
   }
 
-  normalize2(v: string = ''){
-    console.log(v.toLowerCase().match(/[a-m]/g)?.at(0)?.length)
-
-    return v.toLowerCase().match(/^[A-Ma-m]/)
+  fromXtoY(v: string = ''){
+    const r = [this.range()[0], this.range()[1]]
+    const query = `^[${r[0]}-${r[1]}]`
+    const query2 = `^[${r[1]}-z]`
+    const regex = new RegExp(query, 'i')
+    const regex2 = new RegExp(query2, 'i')
+    return v.toLowerCase().match(regex)
   }
   
+  fromYtoZ(v: string = ''){
+    const r = [this.range()[0], this.range()[1]]
+    const query2 = `^[${r[1]}-z]`
+    const regex2 = new RegExp(query2, 'i')
+    return v.toLowerCase().match(regex2)
+  }
 }
 

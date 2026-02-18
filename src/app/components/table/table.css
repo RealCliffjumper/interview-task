@@ -1,3 +1,11 @@
+.table-main {
+  max-width: 50%;
+  margin: 40px auto;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  
+}
 .keyword-search{
     margin-left:10px
 }
@@ -16,4 +24,15 @@
 }
 .counter{
     margin-right: 5px;
+}
+
+.user-counts{
+    margin-left: 3%;
+    margin-top:10px;
+    border-color:rgb(223, 99, 99);
+    border-width: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 90%;
 }
